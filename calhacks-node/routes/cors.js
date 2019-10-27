@@ -1,4 +1,4 @@
-/*const express = require('express');
+const express = require('express');
 const cors = require('cors');
 const app = express();
 
@@ -21,11 +21,12 @@ var corsOptionsDelegate = (req, callback) => {
 		corsOptions = { origin: false };
 		callback(new Error('Not allowed by CORS'), corsOptions);
 	}*/
-/*};
+};
 
 exports.cors = cors();
-exports.corsWithOptions = cors(corsOptionsDelegate);*/
+exports.corsWithOptions = cors(corsOptionsDelegate);
 
+/*
 const express = require('express');
 const cors = require('cors');
 const app = express();
@@ -49,4 +50,4 @@ var corsOptionsDelegate = (req, callback) => {
 };
 
 exports.cors = cors();
-exports.corsWithOptions = cors(corsOptionsDelegate);
+exports.corsWithOptions = cors(corsOptionsDelegate);*/
