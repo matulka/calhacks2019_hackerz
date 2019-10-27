@@ -31,11 +31,11 @@ export default class Accomodation extends Component {
     }
 
     if (Date(startDate) > current_date && Date(endDate) > Date(startDate)){
-        newAcc.append('startTime', startDate);
-        newAcc.append('endTime', endDate);
+        newAcc['startTime'] = startDate;
+        newAcc['endTime'] = endDate;
     }
     if (values.description !== ''){
-        newAcc.append('description', values.description);
+        newAcc['description'] = values.description;
     }
 
     fetch('http://localhost:3001/'+this.props.location, {
