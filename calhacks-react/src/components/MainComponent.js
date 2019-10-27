@@ -6,6 +6,7 @@ import Accomodation from './Accomodation';
 import Login from './LoginComponent';
 import { actions } from 'react-redux-form';
 import { connect } from 'react-redux';
+import { fetchLogin } from '../redux/ActionCreators';
 
 /********************************************************************************************
 **
@@ -14,7 +15,7 @@ import { connect } from 'react-redux';
 ********************************************************************************************/
 
 export const fakeAuth = {
-    isAuthenticated: true,
+    isAuthenticated: false,
     authenticate(cb) {
       this.isAuthenticated = true
       setTimeout(cb, 100) // fake async
@@ -35,14 +36,15 @@ export const fakeAuth = {
   
 const mapStateToProps = state => {
     return {
-          
+      location_id: state.location.id
     }    
   }
 
 const mapDispatchToProps = (dispatch) => ({
     resetRegistration: () => {dispatch(actions.reset('registration'))},
     resetAccomodation: () => {dispatch(actions.reset('accomodation'))},
-    resetLogin: () => {dispatch(actions.reset('login'))}
+    resetLogin: () => {dispatch(actions.reset('login'))},
+    fetchLogin: (username, keyword) => dispatch(fetchLogin(username, keyword))
 });
 
 /********************************************************************************************
@@ -63,39 +65,18 @@ class Main extends Component {
 
     const AccomodationPage = () => {
         return(
-            <Accomodation resetAccomodation = {this.props.resetAccomodation}/>
+            <Accomodation resetAccomodation = {this.props.resetAccomodation}
+              location = {this.props.location_id}/>
         );
     }
 
     const LoginPage = () => {
         return(
-            <Login resetLogin = {this.props.resetLogin}/>
+            <Login resetLogin = {this.props.resetLogin}
+              fetchLogin = {this.props.fetchLogin}
+              location = {this.props.location_id}/>
         );
     }
-
-    /*const ContactPage = () => {
-      return(
-        <Contact resetContact = {this.props.resetContact}/>
-      );
-    }
-
-    const HomePage = () => {
-      return(
-        <Home/>
-      );
-    }
-
-    const InstructorPage = () => {
-      return(
-        <Instructor/>
-      );
-    }
-
-    const DonationPage = () => {
-      return(
-        <Donation/>
-      );
-    }*/
 
     return (
       <div>

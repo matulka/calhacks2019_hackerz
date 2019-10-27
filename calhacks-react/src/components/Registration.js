@@ -14,6 +14,28 @@ export default class Registration extends Component {
 
   handleSubmit(values){
     console.log("Login button clicked")
+
+    const newLoc = {
+        name: values.name,
+        username: values.username,
+        keyword: values.keyword,
+        streetAddress: values.address+', '+values.city+', '+values.state,
+        zipCode: values.zip
+    }
+
+    fetch('http://localhost:3001/', {
+        method: 'POST',
+        body: JSON.stringify(newLoc),
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        credentials: 'same-origin'
+      })
+      .then(function(response) {
+          return response.json()
+      })
+
+
     this.props.resetRegistration();
   }
 
@@ -25,7 +47,7 @@ export default class Registration extends Component {
             <h2> Registration Form </h2>
         </Center>
         <br/><br/>
-        <Form model="registration" onSubmit={(values) => this.handleSubmit(values)}>
+        <Form model="register" onSubmit={(values) => this.handleSubmit(values)}>
           <Row className="form-group">
               <Col md={{ size: 8, offset: 2 }}>
                   <Control.text model=".name" id="name" name="name"

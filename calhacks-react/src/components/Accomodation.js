@@ -20,6 +20,36 @@ export default class Accomodation extends Component {
 
   handleSubmit(values){
     console.log("Accomodation submission button clicked")
+    console.log(values);
+    
+    var startDate = values.startyear+'-'+values.startmonth+'-'+values.startday+'T'+values.starthour+':'+values.startminute+':00';
+    var endDate = values.endyear+'-'+values.endmonth+'-'+values.endday+'T'+values.endhour+':'+values.endminute+':00';
+    var current_date = new Date()
+
+    const newAcc = {
+        peopleQuantity: values.people,
+    }
+
+    if (Date(startDate) > current_date && Date(endDate) > Date(startDate)){
+        newAcc.append('startTime', startDate);
+        newAcc.append('endTime', endDate);
+    }
+    if (values.description !== ''){
+        newAcc.append('description', values.description);
+    }
+
+    fetch('http://localhost:3001/'+this.props.location, {
+        method: 'POST',
+        body: JSON.stringify(newAcc),
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        credentials: 'same-origin'
+      })
+      .then(function(response) {
+          return response.json()
+      })
+
     this.props.resetAccomodation();
   }
 
@@ -31,7 +61,7 @@ export default class Accomodation extends Component {
             <h2> Add Accomodation </h2>
         </Center>
         <br/><br/>
-        <Form model="accomodation" onSubmit={(values) => this.handleSubmit(values)}>
+        <Form model="accomodate" onSubmit={(values) => this.handleSubmit(values)}>
           <Row className="form-group">
               <Col md={{ size: 7, offset: 2 }}>
                   <Control.text model=".people" id="people" name="people"

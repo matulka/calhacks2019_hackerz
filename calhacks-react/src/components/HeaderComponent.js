@@ -33,7 +33,8 @@ class Header extends Component {
 		          <div className="container">
 		          	<NavbarToggler onClick={this.toggleNav} />
 		            <NavbarBrand className="mr-auto">
-		            	
+						<img src={require('../mealstop.png')} height="60" width="60"
+		            		alt="MealStop" />
 		            </NavbarBrand>
 		            <Collapse isOpen={this.state.isNavOpen} navbar>
 		            	<Nav navbar>          		

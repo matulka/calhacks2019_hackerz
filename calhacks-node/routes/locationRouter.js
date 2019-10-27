@@ -8,6 +8,9 @@ const Models = require('../models/models.js');
 const locationRouter = express.Router();
 
 locationRouter.use(bodyParser.json());
+locationRouter.use(bodyParser.urlencoded({     
+    extended: true
+})); 
 
 function calculate_distance(zip1, zip2){
     //Calculate distance between two zip codes
@@ -53,7 +56,8 @@ locationRouter.route('/')
     }, (err) => next(err))
     .catch((err) => next(err));
 })
-.post(cors.corsWithOptions, (req, res, next) => { //creating location
+.post(cors.cors, (req, res, next) => { //creating location
+    console.log(req.body);
     Models.locations.create(req.body)
     .then((location) => {
         console.log('Location created ', location);
@@ -106,6 +110,7 @@ locationRouter.route('/login/:username/:keyword')
 locationRouter.route('/:locationId')
 .options(cors.corsWithOptions, (req, res) => { res.sendStatus(200); })
 .post(cors.corsWithOptions, (req, res, next) => {  //creating an accomodation
+    console.log(req.body);
     var locationId = req.params.locationId;
     Models.locations.findById(locationId)
     .then((location) => {
@@ -116,6 +121,7 @@ locationRouter.route('/:locationId')
         }
         else {
             dict = req.body;
+            console.log(req.body.startTime, req.body.endTime, req.body.peopleQuantity, req.body.description);
             dict['location'] = location;
             Models.accomodations.create(dict)
             .then((accomodation) => {

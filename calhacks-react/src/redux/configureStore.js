@@ -3,14 +3,16 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
 import { registration, accomodation, login } from './forms';
+import { Location } from './location';
 
 export const ConfigureStore = () => {
 	const store = createStore(
 		combineReducers({
+			location: Location,
 			...createForms({
-                Register: registration,
-                Accomodate: accomodation,
-                Login: login
+                register: registration,
+                accomodate: accomodation,
+                login: login
             })
 		}),
 		applyMiddleware(thunk, logger)
